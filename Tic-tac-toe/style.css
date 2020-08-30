@@ -1,0 +1,169 @@
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+}
+
+:root {
+	--cell-size: 100px;
+	--mark-size: calc(var(--cell-size) * 0.9);
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+		Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+body {
+	margin: 0;
+	background-color: #0d9094;
+}
+
+.field {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.board {
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	justify-items: center;
+	align-items: center;
+	grid-template-columns: repeat(3, auto);
+}
+
+.cell {
+	width: var(--cell-size);
+	height: var(--cell-size);
+	border: 1px solid black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	background-color: white;
+}
+
+/* Show the boarders of the grid */
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+	border-top: 3px solid black;
+}
+
+.cell:nth-child(3n + 1) {
+	border-left: 3px solid black;
+}
+
+.cell:nth-child(3n + 3) {
+	border-right: 3px solid black;
+}
+
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7) {
+	border-bottom: 3px solid black;
+}
+
+/* Change cursor */
+.cell:not(.x).cell:not(.o) {
+	cursor: pointer;
+}
+
+/* Hover effect */
+.cell.x::after,
+.cell.x::before {
+	background-color: black;
+}
+
+.cell.o::after,
+.cell.o::before {
+	background-color: black;
+}
+
+.board.x .cell:not(.x):not(.o):hover::after,
+.board.x .cell:not(.x):not(.o):hover::before {
+	background-color: lightgray;
+}
+
+.board.o .cell:not(.x):not(.o):hover::after,
+.board.o .cell:not(.x):not(.o):hover::before {
+	background-color: lightgray;
+}
+
+/* Draw the X */
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.o):hover::after,
+.board.x .cell:not(.x):not(.o):hover::before {
+	content: "";
+	position: absolute;
+	width: calc(var(--mark-size) * 0.15);
+	height: var(--mark-size);
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.o):hover::after {
+	transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.o):hover::before {
+	transform: rotate(-45deg);
+}
+
+/* Draw the O */
+.cell.o::before,
+.cell.o::after,
+.board.o .cell:not(.x):not(.o):hover::before,
+.board.o .cell:not(.x):not(.o):hover::after {
+	content: "";
+	position: absolute;
+	border-radius: 50%;
+}
+
+.cell.o::before,
+.board.o .cell:not(.x):not(.o):hover::before {
+	width: var(--mark-size);
+	height: var(--mark-size);
+}
+
+.cell.o::after,
+.board.o .cell:not(.x):not(.o):hover::after {
+	width: calc(var(--mark-size) * 0.7);
+	height: calc(var(--mark-size) * 0.7);
+	background-color: white;
+}
+
+.winning-message {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.9);
+	justify-content: center;
+	align-items: center;
+	color: white;
+	font-size: 3rem;
+	flex-direction: column;
+}
+
+.winning-message button {
+	font-size: 2rem;
+	background-color: white;
+	border: 1px solid black;
+	padding: 0.25em 0.5em;
+	cursor: pointer;
+}
+
+.winning-message button:hover {
+	background-color: black;
+	color: white;
+	border-color: white;
+}
+
+.winning-message.show {
+	display: flex;
+}
